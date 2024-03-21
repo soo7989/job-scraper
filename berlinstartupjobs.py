@@ -1,24 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 
-
 BASE_URL = "https://berlinstartupjobs.com"
 headers = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 }
-skills = ["python", "typescript", "javascript", "rust"]
-all_jobs = []
+
 sch_jobs = []
-
-
-# 페이지네이션 인덱스 카운트
-def get_page_numbers():
-    response = requests.get(
-        url=f"{BASE_URL}/engineering",
-        headers=headers,
-    )
-    soup = BeautifulSoup(response.content, "html.parser")
-    return len(soup.find("ul", class_="bsj-nav").findAll("a"))
 
 
 # 구인정보 추출
@@ -48,21 +36,8 @@ def scraper(url):
         print(f"Error: {response.status_code}")
 
 
-# def total_jobs(key):
-#     for i in range(get_page_numbers()):
-#         url = f"{BASE_URL}/engineering/page/{i+1}/"
-#         scraper(url)
-#
-#     for skill in skills:
-#         url = f"{BASE_URL}/skill-areas/{skill}/"
-#         scraper(url)
-#
-#     url = f"{BASE_URL}/skill-areas/{key}/"
-#     scraper(url)
-#
-#     return all_jobs
-
-
 def search_jobs_keyword(key):
+    sch_jobs.clear()
     url = f"{BASE_URL}/skill-areas/{key}/"
     scraper(url)
+    return sch_jobs

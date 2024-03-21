@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+	      name="viewport">
+	<meta content="ie=edge" http-equiv="X-UA-Compatible">
+	<title>Find Jobs</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
+</head>
+<body class="container" style="padding: 2.5em;">
+<h1>Find Jobs</h1>
+<form action="/results">
+	<fieldset>
+		<label>
+			What is your skill?
+			<input name="keyword"
+			       placeholder="e.g., python"
+			       autocomplete="given-name"/>
+		</label>
+	</fieldset>
+
+	<input type="submit"
+	       value="search"/>
+</form>
+<br/>
+<h2>{{ num_results }} search results for {{ key }}</h2>
+{#<div>{{ job_list }}</div>#}
+{% for list in job_list %}
+	<article>
+		<header>
+			{{ list.position }}
+		</header>
+		{{ list.description }}
+		<footer>
+			{{ list.company }}
+			<a href="{{ list.link }}" target="_blank">more info</a>
+		</footer>
+	</article>
+{% endfor %}
+</body>
+</html>
