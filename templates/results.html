@@ -24,11 +24,11 @@
 	       value="search"/>
 </form>
 <h2>{{ num_results }} search results for {{ key }}</h2>
-{#<div>{{ job_list }}</div>#}
+<i style="display: block;color: darkgray; padding: 1em 0">Search up to 15 items. For more information, please check the website.</i>
 {% for list in job_list %}
 	<article>
 		<header>
-			<strong>{{ list.company }}</strong> is looking for a <strong>{{ list.position }}</strong>
+			<strong>{{ list.company }}</strong> is hiring a <strong>{{ list.position }}</strong>
 		</header>
 		<p>{{ list.description }}</p>
 		<footer style="display: flex; justify-content: space-between">

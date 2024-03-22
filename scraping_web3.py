@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-BASE_URL = "https://berlinstartupjobs.com"
+BASE_URL = "https://web3.career"
 headers = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 }
@@ -12,16 +12,17 @@ sch_jobs = []
 # 구인정보 추출
 def job_info(jobs):
     for job in jobs:
-        company = job.find("a", "bjs-jlid__b").text
-        position = job.find("h4", "bjs-jlid__h").find("a").text
-        description = job.find("div", "bjs-jlid__description").text
-        link = job.find("h4", "bjs-jlid__h").find("a")["href"]
+        jobid = job.get("data-jobid")
+        company = job.findAll("td")[1].text.strip()
+        position = job.findAll("td")[0].text.strip()
+        description = job.findAll("td")[3].text.strip()
+        link = transform_string(position, jobid)
         job_data = {
             "company": company,
             "position": position,
             "description": description,
             "link": link,
-            "source": "berlinstartupjobs.com",
+            "source": "web3.career",
         }
         sch_jobs.append(job_data)
 
@@ -30,14 +31,19 @@ def job_info(jobs):
 def scraper(url):
     response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.content, "html.parser")
-    jobs = soup.find("ul", class_="jobs-list-items").findAll("li", class_="bjs-jlid")[
-        0:5
-    ]
+    jobs = soup.find(class_="row-cols-2").find("table").find("tbody").findAll("tr")[0:5]
     job_info(jobs)
 
 
-def search_jobs_berlinstartupjobs(key):
+def transform_string(position, jobid):
+    lowercased_string = position.lower()
+    hyphenated_string = lowercased_string.replace(" ", "-")
+    final_string = f"{BASE_URL}/{hyphenated_string}/{jobid}"
+    return final_string
+
+
+def search_jobs_web3(key):
     sch_jobs.clear()
-    url = f"{BASE_URL}/skill-areas/{key}/"
+    url = f"{BASE_URL}/{key}-jobs"
     scraper(url)
     return sch_jobs
