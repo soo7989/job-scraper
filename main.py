@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
-
-from berlinstartupjobs import search_jobs_keyword
+from scraping_berlinstartupjobs import search_jobs_keyword
+from scraping_web3 import search_jobs_keyword
 
 app = Flask("Find Jobs")
 

@@ -21,6 +21,7 @@ def job_info(jobs):
             "position": position,
             "description": description,
             "link": link,
+            "source": "berlinstartupjobs.com",
         }
         sch_jobs.append(job_data)
 
