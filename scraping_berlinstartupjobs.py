@@ -29,10 +29,10 @@ def scraper(url):
 def job_info(jobs):
     """구인정보 편집"""
     for job in jobs:
-        company = job.find("a", "bjs-jlid__b").text
-        position = job.find("h4", "bjs-jlid__h").find("a").text
-        description = job.find("div", "bjs-jlid__description").text
-        link = job.find("h4", "bjs-jlid__h").find("a")["href"]
+        company = job.find("a", class_="bjs-jlid__b").text
+        position = job.find("h4", class_="bjs-jlid__h").find("a").text
+        description = job.find("div", class_="bjs-jlid__description").text
+        link = job.find("h4", class_="bjs-jlid__h").find("a")["href"]
         job_data = {
             "company": company,
             "position": position,
