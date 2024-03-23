@@ -9,7 +9,24 @@ headers = {
 sch_jobs = []
 
 
-# 구인정보 추출
+def scraper(url):
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.content, "html.parser")
+    if response.status_code == 200:
+        try:
+            jobs = (
+                soup.find(class_="row-cols-2")
+                .find("table")
+                .find("tbody")
+                .findAll("tr", attrs={"data-jobid": True})[0:5]
+            )
+            job_info(jobs)
+        except AttributeError:
+            return print("AttributeError")
+    else:
+        print(response.status_code)
+
+
 def job_info(jobs):
     for job in jobs:
         jobid = job.get("data-jobid")
@@ -37,19 +54,6 @@ def scraper_detail(url):
 
 def limit_text_length(text, max_length=400):
     return text[:max_length]
-
-
-# 구인정보
-def scraper(url):
-    response = requests.get(url, headers=headers)
-    soup = BeautifulSoup(response.content, "html.parser")
-    jobs = (
-        soup.find(class_="row-cols-2")
-        .find("table")
-        .find("tbody")
-        .findAll("tr", attrs={"data-jobid": True})[0:5]
-    )
-    job_info(jobs)
 
 
 def transform_string(position, jobid):

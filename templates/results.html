@@ -23,19 +23,24 @@
 	<input type="submit"
 	       value="search"/>
 </form>
-<h2>{{ num_results }} search results for {{ key }}</h2>
-<i style="display: block;color: darkgray; padding: 1em 0">Search up to 15 items. For more information, please check the website.</i>
-{% for list in job_list %}
-	<article>
-		<header>
-			<strong>{{ list.company }}</strong> is hiring a <strong>{{ list.position }}</strong>
-		</header>
-		<p>{{ list.description }}</p>
-		<footer style="display: flex; justify-content: space-between">
-			<a href="{{ list.link }}" target="_blank">more info</a>
-			<i style="color: darkgray">{{ list.source }}</i>
-		</footer>
-	</article>
-{% endfor %}
+{% if num_results > 0 %}
+	<h2>{{ num_results }} search results for {{ key }}</h2>
+	<i style="display: block;color: darkgray; padding: 1em 0">Search up to 15 items. For more information, please check
+		the website.</i>
+	{% for list in job_list %}
+		<article>
+			<header>
+				<strong>{{ list.company }}</strong> is hiring a <strong>{{ list.position }}</strong>
+			</header>
+			<p>{{ list.description }}</p>
+			<footer style="display: flex; justify-content: space-between">
+				<a href="{{ list.link }}" target="_blank">more info</a>
+				<i style="color: darkgray">{{ list.source }}</i>
+			</footer>
+		</article>
+	{% endfor %}
+{% else %}
+	<h2>Opps! There are no search results for "{{ key }}" 🥲</h2>
+{% endif %}
 </body>
 </html>
