@@ -20,6 +20,7 @@ def scraper(url):
             job_group1.pop()
             job_group2.pop()
             jobs = job_group1 + job_group2
+            jobs = jobs[:5]
             job_info(jobs)
         except AttributeError:
             return print("AttributeError")
